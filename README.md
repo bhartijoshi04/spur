@@ -1,6 +1,6 @@
 # AI Chat Application 🤖
 
-A modern full-stack chat application built with React, Express, PostgreSQL, and Redis, featuring OpenAI integration for intelligent conversations with conversation history caching and rate limiting.
+Spurbot, built with React, Express, PostgreSQL, and Redis, features OpenAI integration for intelligent conversations with conversation history caching and rate limiting.
 
 ## 🚀 Quick Start
 
