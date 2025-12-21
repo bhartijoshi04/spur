@@ -3,9 +3,10 @@ services:
     name: spur-backend
     env: node
     plan: starter
-    buildCommand: npm ci && npm run build
-    startCommand: npm start
+    buildCommand: cd backend && npm ci && npm run build
+    startCommand: cd backend && npm start
     healthCheckPath: /health
+    rootDir: backend
     envVars:
       - key: NODE_ENV
         value: production
