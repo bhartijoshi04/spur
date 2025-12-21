@@ -175,10 +175,10 @@ export async function generateReply(history: ChatMessage[], userMessage: string)
     try {
       const completion = await openai.chat.completions.create(
         {
-          model: "gpt-4",
+          model: "gpt-4.1-2025-04-14",
           messages: input,
           max_tokens: 500,
-          temperature: 0.7,
+          temperature: 0.3,
         },
         {
           signal: controller.signal
