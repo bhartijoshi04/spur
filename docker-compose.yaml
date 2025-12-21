@@ -69,7 +69,7 @@ services:
       target: development
     container_name: spur-frontend
     environment:
-      VITE_API_URL: http://localhost:3001/api
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:3001/api}
     ports:
       - "8080:5173"
     depends_on:

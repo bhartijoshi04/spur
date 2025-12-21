@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 if (!API_BASE_URL) {
@@ -56,7 +58,7 @@ export async function sendMessage(message: string, sessionId?: string): Promise<
       credentials: 'include',
       body: JSON.stringify({
         message: message.trim(),
-        sessionId: sessionId || crypto.randomUUID(),
+        sessionId: sessionId || uuidv4(),
       }),
     });
 
