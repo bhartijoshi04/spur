@@ -20,7 +20,8 @@ app.use(cors({
     'http://localhost:5174', 
     'http://localhost:8080',
     'http://10.50.1.174:8080',
-    'https://spur-chat-app.netlify.app'  // Production frontend URL
+    'https://spur-chat-app.netlify.app',  // Production frontend URL
+    'https://glittering-chebakia-f7c557.netlify.app'  // Current deployed frontend
   ],
   credentials: true,
   methods: ['GET', 'POST', 'OPTIONS'],
