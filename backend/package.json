@@ -6,9 +6,13 @@
   "main": "dist/server.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json && npm run copy-assets",
+    "copy-assets": "mkdir -p dist/db && cp src/db/schema.sql dist/db/",
     "start": "node dist/server.js",
-    "init-db": "tsx src/scripts/init-db.ts"
+    "init-db": "tsx src/scripts/init-db.ts",
+    "test-neon": "tsx src/scripts/test-neon-connection.ts",
+    "test-redis": "tsx src/scripts/test-upstash-redis.ts",
+    "postbuild": "npm run init-db"
   },
   "dependencies": {
     "@types/pg": "^8.16.0",

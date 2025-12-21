@@ -4,14 +4,37 @@ import logger from '../utils/logger.js';
 
 export type RedisClient = ReturnType<typeof createClient>;
 
-export const redisClient = createClient({
-  socket: {
-    host: env.REDIS_HOST,
-    port: env.REDIS_PORT,
-  },
-  password: env.REDIS_PASSWORD || undefined,
-  database: env.REDIS_DB,
-});
+// Create Redis client with priority: Valid REDIS_URL > Upstash config > individual params
+function createRedisConfig() {
+  // Check if REDIS_URL is valid (not placeholder)
+  if (env.REDIS_URL && !env.REDIS_URL.includes('username:password')) {
+    return { url: env.REDIS_URL };
+  }
+  
+  // Check for Upstash configuration
+  if (env.UPSTASH_REDIS_REST_URL && env.UPSTASH_REDIS_REST_TOKEN) {
+    return {
+      socket: {
+        host: new URL(env.UPSTASH_REDIS_REST_URL).hostname,
+        port: parseInt(new URL(env.UPSTASH_REDIS_REST_URL).port) || 6379,
+        tls: true
+      },
+      password: env.UPSTASH_REDIS_REST_TOKEN,
+    };
+  }
+  
+  // Fallback to individual parameters
+  return {
+    socket: {
+      host: env.REDIS_HOST,
+      port: env.REDIS_PORT,
+    },
+    password: env.REDIS_PASSWORD || undefined,
+    database: env.REDIS_DB,
+  };
+}
+
+export const redisClient = createClient(createRedisConfig());
 
 redisClient.on('error', (err: Error) => {
   logger.error('Redis Client Error:', err);

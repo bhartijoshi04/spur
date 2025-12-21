@@ -1,14 +1,22 @@
 import { Pool } from 'pg';
-import dotenv from 'dotenv';
+import { env } from './env.js';
 
-dotenv.config();
-
-const pool = new Pool({
-    user: process.env.POSTGRES_USER,
-    host: process.env.POSTGRES_HOST,
-    database: process.env.POSTGRES_DB,
-    password: process.env.POSTGRES_PASSWORD,
-    port: parseInt(process.env.POSTGRES_PORT || '5432'),
-});
+// Create pool using either connection string (for Neon) or individual parameters
+const pool = new Pool(
+    env.DATABASE_URL 
+        ? {
+            connectionString: env.DATABASE_URL,
+            ssl: {
+                rejectUnauthorized: false
+            }
+        }
+        : {
+            user: env.POSTGRES_USER,
+            host: env.POSTGRES_HOST,
+            database: env.POSTGRES_DB,
+            password: env.POSTGRES_PASSWORD,
+            port: env.POSTGRES_PORT,
+        }
+);
 
 export default pool;
